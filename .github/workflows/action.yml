@@ -47,16 +47,19 @@ jobs:
     # Run a terraform fmt
     - name: Terraform Format
       id: fmt
+      run: terraform fmt -check
       
       
 
     # Run a terraform validate for push and PR on non-main branch
     - name: Terraform Validate
       id: validate
+      run: terraform validate
     
     # Run Terraform plan - this action requires the SP and Azure details
     - name: Terraform Plan
       id: plan
+      run: terraform plan
 
     # Run Checkov against configuration
     # Use example here: https://github.com/bridgecrewio/checkov-action
@@ -69,8 +72,8 @@ jobs:
     # Run this only on pull requests
     # need to add "github-token: ${{ secrets.GH_TOKEN }}" so that the action has access to post comments
     # use exaqmple here: https://github.com/actions/github-script
-    - name: add-plan-comment
-      id: comment_before_deployment
+    #- name: add-plan-comment
+    #  id: comment_before_deployment
  
 
       # On push to main, build or change infrastructure according to Terraform configuration files
@@ -78,3 +81,4 @@ jobs:
       # Needs secrets: ARM_CLIENT_ID, ARM_CLIENT_SECRET, ARM_TENANT_ID, ARM_SUBSCRIPTION_ID
     - name: Terraform Apply
       id: apply
+      run: terraform apply
